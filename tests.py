@@ -5,6 +5,18 @@ from flask.ext.testing import LiveServerTestCase, TestCase
 
 from tmr import app as tmrapp
 
+class TestTMR(TestCase):
+
+    def create_app(self):
+        app = tmrapp
+        app.config['TESTING'] = True
+        return app
+
+    def test_hello_world(self):
+        '''Test we get hello world! back from the index'''
+        response = self.client.get('/')
+        self.assertEqual("Hello world!", response.data)
+
 class TestIndex(LiveServerTestCase):
 
     def create_app(self):

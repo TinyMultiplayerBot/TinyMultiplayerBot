@@ -1,4 +1,5 @@
 from flask import g, request
+from flask.ext.babel import gettext
 
 from tmr import app, babel
 
@@ -13,4 +14,6 @@ def get_locale():
 
     return request.accept_languages.best_match(['en'])
 
-
+@app.route('/', methods=['GET'])
+def index():
+    return gettext('Hello world!')

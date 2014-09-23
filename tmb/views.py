@@ -1,7 +1,8 @@
 from flask import g, render_template, request
 from flask.ext.babel import gettext
 
-from tmb import app, babel
+from tmb import app, babel, db
+from tmb.models import User
 
 
 @babel.localeselector

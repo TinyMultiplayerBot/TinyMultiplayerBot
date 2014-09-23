@@ -1,7 +1,7 @@
 from flask import g, request
 from flask.ext.babel import gettext
 
-from tmr import app, babel
+from tmb import app, babel
 
 
 @babel.localeselector

@@ -5,4 +5,4 @@ from flask.ext.babel import Babel
 app = Flask(__name__)
 babel = Babel(app)
 
-import tmr.views
+import tmb.views

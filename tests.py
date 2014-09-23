@@ -3,12 +3,12 @@ import urllib2
 
 from flask.ext.testing import LiveServerTestCase, TestCase
 
-from tmr import app as tmrapp
+from tmb import app as tmbapp
 
 class TestTMR(TestCase):
 
     def create_app(self):
-        app = tmrapp
+        app = tmbapp
         app.config['TESTING'] = True
         return app
 
@@ -20,7 +20,7 @@ class TestTMR(TestCase):
 class TestIndex(LiveServerTestCase):
 
     def create_app(self):
-        app = tmrapp
+        app = tmbapp
         app.config['TESTING'] = True
         app.config['LIVESERVER_PORT'] = 8943
         return app

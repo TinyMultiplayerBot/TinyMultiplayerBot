@@ -12,11 +12,6 @@ class TestTMR(TestCase):
         app.config['TESTING'] = True
         return app
 
-    def test_hello_world(self):
-        '''Test we get hello world! back from the index'''
-        response = self.client.get('/')
-        self.assertEqual("Hello world!", response.data)
-
 class TestIndex(LiveServerTestCase):
 
     def create_app(self):

@@ -4,7 +4,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 # Initialize the app
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "aosnetuhasoneuht"
+app.config['DEBUG'] = True
+app.config['SECRET_KEY'] = "CHANGE ME"
 babel = Babel(app)
 
 # Database URI

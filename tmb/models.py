@@ -8,19 +8,17 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String(24), unique=True)
-    email = Column(String(128), unique=True)
-    password = Column(String(256))
-    openid = Column(String(64), unique=True)
+    username = Column(String(80), unique=True)
+    steamid = Column(String(64), unique=True)
 
-    def __init__(self, username, password, openid):
-        self.username = username
-        self.password = generate_password_hash(
-            password=password,
-            method="pbkdf2:sha512",
-            salt_longth=128
-        )
-        self.openid = openid
+    @staticmethod
+    def get_or_create(steamid):
+        user = User.query.filter_by(steamid=steamid).first()
+        if user is None:
+            user = User()
+            user.steamid = steamid
+            db.session.add(user)
+        return user
 
     def __repr__(self):
         return "<User %s>" % self.username

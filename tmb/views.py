@@ -1,4 +1,4 @@
-from flask import g, request
+from flask import g, render_template, request
 from flask.ext.babel import gettext
 
 from tmb import app, babel
@@ -16,4 +16,4 @@ def get_locale():
 
 @app.route('/', methods=['GET'])
 def index():
-    return gettext('Hello world!')
+    return render_template("index.html")

@@ -6,7 +6,7 @@ from flask.ext.testing import LiveServerTestCase, TestCase
 from tmb import app as tmbapp, db
 from tmb.models import User
 
-class TestTMR(TestCase):
+class TestTMB(TestCase):
 
     def setUp(self):
         db.create_all()
@@ -44,18 +44,6 @@ class TestTMR(TestCase):
         user_count3 = User.query.count()
         self.assertEqual(user_count3, 2)
 
-
-class TestIndex(LiveServerTestCase):
-
-    def create_app(self):
-        app = tmbapp
-        app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8943
-        return app
-
-    def test_server_is_up_and_running(self):
-        response = urllib2.urlopen(self.get_server_url())
-        self.assertEqual(response.code, 200)
 
 if __name__ == '__main__':
     unittest.main()

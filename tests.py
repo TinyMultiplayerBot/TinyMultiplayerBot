@@ -3,31 +3,47 @@ import urllib2
 
 from flask.ext.testing import LiveServerTestCase, TestCase
 
-from tmb import app as tmbapp
+from tmb import app as tmbapp, db
+from tmb.models import User
 
-class TestTMR(TestCase):
+class TestTMB(TestCase):
 
-    def create_app(self):
-        app = tmbapp
-        app.config['TESTING'] = True
-        return app
+    def setUp(self):
+        db.create_all()
+        super(TestCase, self).setUp()
 
-    def test_hello_world(self):
-        '''Test we get hello world! back from the index'''
-        response = self.client.get('/')
-        self.assertEqual("Hello world!", response.data)
-
-class TestIndex(LiveServerTestCase):
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+        super(TestCase, self).tearDown()
 
     def create_app(self):
         app = tmbapp
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8943
+        app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///../test.db"
         return app
 
-    def test_server_is_up_and_running(self):
-        response = urllib2.urlopen(self.get_server_url())
-        self.assertEqual(response.code, 200)
+    def test_create_account(self):
+        steamid = "au9a0ou9ea0"
+
+        # There should only be one user
+        u = User.get_or_create(steamid)
+        db.session.commit()
+        user_count = User.query.count()
+        self.assertEqual(user_count, 1)
+
+        # There should only be one user
+        u2 = User.get_or_create(steamid)
+        db.session.commit()
+        user_count2 = User.query.count()
+        self.assertEqual(user_count2, 1)
+
+        # Now there should be 2 users
+        u3 = User.get_or_create("ah9oe0uh")
+        db.session.commit()
+        user_count3 = User.query.count()
+        self.assertEqual(user_count3, 2)
+
 
 if __name__ == '__main__':
     unittest.main()

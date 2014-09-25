@@ -82,3 +82,6 @@ target/
 # sftp configuration file
 sftp-config.json
 
+
+# TMB Specific
+*.db
